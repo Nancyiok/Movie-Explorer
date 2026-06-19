@@ -17,7 +17,11 @@ const headerRoutes = computed(() => {
   <header class="flex items-center justify-between p-4">
     <LogoNav />
     <ul class="flex gap-4">
-      <li v-for="route in headerRoutes" :key="route.name" class="py-3 px-4 text-gray-200 text-[16px] font-semibold">
+      <li
+        v-for="route in headerRoutes"
+        :key="route.name"
+        class="py-3 px-4 text-gray-200 text-[16px] font-semibold"
+      >
         <RouterLink :to="route.path">{{ route.name }}</RouterLink>
       </li>
     </ul>

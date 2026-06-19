@@ -1,13 +1,17 @@
-import axiosInstance from '@/services/index.ts'
+import type { AxiosInstance } from 'axios'
 
-axiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      // Handle logout or redirect to login
-      console.error('Unauthorized, logging out...')
-    }
-    // Show error message
-    return Promise.reject(error)
-  },
-)
+const responseInterceptor = (instance: AxiosInstance) => {
+  instance.interceptors.response.use(
+    (response) => response.data,
+    (error) => {
+      if (error.response?.status === 401) {
+        // Handle logout or redirect to login
+        console.error('Unauthorized, logging out...')
+      }
+      // Show error message
+      return Promise.reject(error)
+    },
+  )
+}
+
+export default responseInterceptor

@@ -1,8 +1,9 @@
 import { ROUTES } from '../constants/navigationPath.ts'
-import SearchMoviesView from '@/views/SearchMoviesView.vue'
+import PopularMoviesView from '@/views/PopularMoviesView.vue'
 
 export const publicRoutes = [
-  { path: ROUTES.SEARCH_MOVIES, name: 'Search Movies', component: SearchMoviesView },
+  { path: ROUTES.SEARCH_MOVIES, name: 'Search Movies', component: PopularMoviesView },
+  { path: `${ROUTES.SEARCH_MOVIES}/:id`, name: 'Movies', component: PopularMoviesView },
   { path: ROUTES.LOGIN, name: 'Login', component: 'LoginPage' },
   { path: ROUTES.REGISTER, name: 'Register', component: 'RegisterPage' },
   { path: ROUTES.FORGOT, name: 'Forgot Password', component: 'ForgotPage' },

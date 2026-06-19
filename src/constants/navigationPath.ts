@@ -6,6 +6,7 @@ export const PROFILE_PATH = '/profile'
 export const SEARCH_MOVIES_PATH = '/'
 export const WATCH_LIST_MOVIES_PATH = '/watchlist'
 export const FAVORITES_MOVIES_PATH = '/favorites'
+export const MOVIE_INFO_PATH = '/movie'
 
 export const ROUTES = {
   LOGIN: LOGIN_PATH,
@@ -16,4 +17,5 @@ export const ROUTES = {
   SEARCH_MOVIES: SEARCH_MOVIES_PATH,
   WATCH_LIST_MOVIES: WATCH_LIST_MOVIES_PATH,
   FAVORITES_MOVIES: FAVORITES_MOVIES_PATH,
+  MOVIE: MOVIE_INFO_PATH,
 }

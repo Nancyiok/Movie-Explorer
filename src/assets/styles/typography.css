@@ -1,13 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@400;600;700&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&family=Silkscreen:wght@400;700&display=swap');
 @reference "tailwindcss";
+
 @layer base {
   h1 {
-    @apply font-[400] text-[64px] leading-[80px] tracking-[-2px];
+    @apply text-4xl font-bold tracking-wider;
   }
 
+  body {
+    @apply bg-slate-950 text-white;
+  }
   h2 {
-    @apply font-[400] text-[48px] leading-[60px] tracking-[-2px];
+    @apply font-[500] text-[48px] leading-[60px] tracking-[-2px];
+  }
+
+  h3 {
+    @apply font-[400] text-[36px] leading-[48px] tracking-[-2px];
   }
 
   a {
