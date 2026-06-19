@@ -1,0 +1,14 @@
+@import "tailwindcss";
+@import "typography.css";
+
+@theme {
+  --font-display: "Poppins", system-ui;
+  --font-logo: "Pacifico", cursive;
+}
+
+@layer base {
+  body {
+    background: url('../images/app-background.svg') center center / cover no-repeat;
+    @apply bg-gray-900 font-display;
+  }
+}
