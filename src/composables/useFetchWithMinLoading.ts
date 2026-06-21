@@ -1,26 +1,32 @@
-import { ref, watch } from 'vue'
+import { ref, watch, type WatchSource } from 'vue'
 import { HttpStatusCode } from 'axios'
 
 type Options = {
   minLoadingTimeMs?: number
+  // Позволяем передавать массив зависимостей для отслеживания (например, [movieId])
+  dependencies?: WatchSource<unknown>[]
 }
 
 export function useFetchWithMinLoading<T>(
   fetchData: () => Promise<T>,
-  { minLoadingTimeMs = 600 }: Options = {},
+  { minLoadingTimeMs = 600, dependencies = [] }: Options = {},
 ) {
   const isLoading = ref(false)
   const result = ref<T | null>(null)
   const error = ref<Error | null>(null)
   const notFound = ref(false)
   const hasError = ref(false)
+
   const reloadKey = ref(0)
   const refetch = () => reloadKey.value++
 
-  watch(reloadKey,
-    (newKey, oldKey, onCleanup) => {
+  watch(
+    [reloadKey, ...dependencies],
+    (newValues, oldValues, onCleanup) => {
       let cancelled = false
+
       const loadStartTime = Date.now()
+
       isLoading.value = true
       notFound.value = false
       hasError.value = false
@@ -31,7 +37,9 @@ export function useFetchWithMinLoading<T>(
       })
 
       const resolveRemainingTime = (fn: () => void) => {
-        const remaining = minLoadingTimeMs - (Date.now() - loadStartTime)
+        const timePassed = Date.now() - loadStartTime
+        const remaining = minLoadingTimeMs - timePassed
+
         setTimeout(
           () => {
             if (cancelled) return

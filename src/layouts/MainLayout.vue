@@ -5,6 +5,8 @@ import HeaderNav from '@/components/UI/HeaderNav/HeaderNav.vue'
 <template>
   <div>
     <HeaderNav />
-    <slot />
+    <div class="lg:px-30 px-4">
+      <slot />
+    </div>
   </div>
 </template>
