@@ -1,14 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 @import "tailwindcss";
 @import "typography.css";
-
-@theme {
-  --font-display: "Poppins", system-ui;
-  --font-logo: "Pacifico", cursive;
-}
+@import "variables.css";
+@plugin "daisyui";
 
 @layer base {
   body {
     background: url('../images/app-background.svg') center center / cover no-repeat;
-    @apply bg-gray-900 font-display;
+    @apply bg-gray-900;
+    font-family: var(--font-display);
   }
 }
