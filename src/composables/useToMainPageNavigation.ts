@@ -1,11 +1,14 @@
 import { useRouter } from 'vue-router'
-import {ROUTES} from '@/constants/navigationPath.ts'
+import { ROUTES } from '@/constants/navigationPath.ts'
 
-export function useMovieNavigation() {
+export function useMovieNavigation(query: any) {
   const router = useRouter()
 
   const goToMainPage = () => {
-    router.push(ROUTES.SEARCH_MOVIES)
+    router.push({
+      path: ROUTES.SEARCH_MOVIES,
+      ...(query && query),
+    })
   }
 
   return {

@@ -13,7 +13,6 @@ const headerPublicRoutes = computed(() => {
 const headerRoutes = computed(() => {
   return true ? authRoutes : headerPublicRoutes
 })
-
 </script>
 <template>
   <header class="flex items-center justify-between p-4">
@@ -24,7 +23,9 @@ const headerRoutes = computed(() => {
         :key="route.name"
         class="py-3 px-4 text-gray-200 text-[16px] font-semibold"
       >
-        <RouterLink :to="route.path" class="hover:text-violet-400">{{ route.name }}</RouterLink>
+        <RouterLink :to="route.path" class="hover:text-violet-400">{{
+          route.meta.title
+        }}</RouterLink>
       </li>
     </ul>
     <BurgerMenu :routes="headerRoutes" />

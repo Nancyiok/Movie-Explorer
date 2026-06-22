@@ -2,30 +2,27 @@
 import type { MovieDetails } from '@/types/movies.js'
 import { Image } from '@unpic/vue'
 import { computed } from 'vue'
-import GenreLabel from '@/components/Movies/Details/GenreLabel.vue'
+import GenreLabel from '@/components/Movies/Details/MovieHeader/GenreLabel.vue'
 import BackButton from '@/components/UI/BackButton.vue'
 import UppercaseTitle from '@/components/UI/UppercaseTitle.vue'
-import MovieHeaderSkeleton from '@/components/Movies/Details/MovieHeader/MovieHeaderSkeleton.vue'
+import { getImageUrl } from '@/utils/getImageUrl.ts'
+import LazyImage from '@/components/UI/LazyImage.vue'
 
 interface Props {
   movieDetails: MovieDetails | null
-  isLoading: boolean
 }
 
-const { movieDetails, isLoading } = defineProps<Props>()
+const { movieDetails } = defineProps<Props>()
 
-const moviePoster = computed(
-  () => `${import.meta.env.VITE_TMDB_IMAGE_BASE_PATH}${'w780'}/${movieDetails?.backdrop_path}`,
-)
+const moviePoster = computed(() => getImageUrl(movieDetails?.backdrop_path, 'w780'))
 </script>
 
 <template>
-  <MovieHeaderSkeleton v-if="isLoading" />
-  <div class="relative" v-else-if="!isLoading && !!movieDetails">
+  <div class="relative" v-if="movieDetails">
     <BackButton />
-    <Image
+    <LazyImage
       :src="moviePoster"
-      class="w-full h-120 object-cover object-top rounded-[40px]"
+      imageClass="w-full h-120 object-cover object-top rounded-[40px]"
       :alt="`${movieDetails.title} poster`"
     />
 
