@@ -4,21 +4,26 @@ import type { Movie } from '@/types/movies.js'
 import VoteAverageMovieLabel from '@/components/Movies/Card/VoteAverageMovieLabel.vue'
 import { useRouter } from 'vue-router'
 import { ROUTES } from '@/constants/navigationPath.js'
-import { Image } from '@unpic/vue'
 import { getImageUrl } from '@/utils/getImageUrl.ts'
+import LazyImage from '@/components/UI/LazyImage.vue'
 
 interface Props {
   cardInfo: Movie
-  isLoading: boolean
 }
 
 const { cardInfo } = defineProps<Props>()
 const router = useRouter()
 
 const moviePoster = computed(() => getImageUrl(cardInfo.poster_path))
+const posterAltText = computed(() => {
+  return cardInfo.value?.title ? `"${cardInfo.value.title}" movie image` : 'Movie image'
+})
 
 const navigateToMovieDetail = () => {
-  router.push(`${ROUTES.MOVIE}/${cardInfo.id}`)
+  router.push({
+    path: `${ROUTES.MOVIE}/${cardInfo.id}`,
+    query: router.currentRoute.value.query,
+  })
 }
 </script>
 
@@ -32,9 +37,10 @@ const navigateToMovieDetail = () => {
       class="absolute left-4 top-[16px] z-10"
     />
     <div class="overflow-hidden bg-cover bg-no-repeat rounded-[8px]">
-      <Image
+      <LazyImage
         :src="moviePoster"
-        class="w-full h-full object-cover transition duration-300 ease-in-out hover:scale-105"
+        :alt="posterAltText"
+        imageClass="w-full h-full object-cover transition duration-300 ease-in-out hover:scale-105"
       />
     </div>
     <p class="text-white p-2">{{ cardInfo.title }}</p>

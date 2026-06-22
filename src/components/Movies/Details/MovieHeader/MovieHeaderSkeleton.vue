@@ -3,8 +3,8 @@ import ContentSkeleton from '@/components/UI/ContentSkeleton.vue'
 </script>
 
 <template>
-  <div class="relative animate-pulse select-none pointer-events-none">
-    <div class="absolute top-4 left-4 z-10 w-10 h-10 bg-slate-700/50 rounded-full"></div>
+  <div class="relative">
+    <div class="absolute top-6 left-6 z-10 w-11 h-11 bg-slate-700/50 rounded-full"></div>
     <ContentSkeleton skeletonStyles="w-full h-120 bg-slate-800 rounded-[40px]" />
     <div
       class="absolute inset-0 bg-gradient-to-b from-violet-900/20 to-blue-900/20 rounded-[40px]"
@@ -17,9 +17,7 @@ import ContentSkeleton from '@/components/UI/ContentSkeleton.vue'
       <div class="flex flex-wrap gap-2 items-center">
         <ContentSkeleton skeletonStyles="h-3 bg-slate-700/60 rounded w-12 mr-2" />
 
-        <ContentSkeleton skeletonStyles="h-6 bg-slate-700 rounded-full w-16" />
-        <ContentSkeleton skeletonStyles="h-6 bg-slate-700 rounded-full w-20" />
-        <ContentSkeleton skeletonStyles="h-6 bg-slate-700 rounded-full w-14" />
+        <ContentSkeleton v-for="i in 3" :key="i" skeletonStyles="h-[30px] bg-slate-700 rounded-full w-16" />
       </div>
     </div>
   </div>
