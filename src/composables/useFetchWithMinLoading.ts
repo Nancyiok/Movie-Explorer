@@ -46,7 +46,6 @@ export function useFetchWithMinLoading<T>(
 
       try {
         const data = await fetchData(abortController.signal)
-        console.log(data)
         resolveRemainingTime(() => {
           result.value = data
         })

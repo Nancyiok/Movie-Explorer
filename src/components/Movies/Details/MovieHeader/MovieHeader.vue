@@ -23,7 +23,8 @@ const moviePoster = computed(() => getImageUrl(movieDetails?.backdrop_path, 'w78
     <LazyImage
       :src="moviePoster"
       imageClass="w-full h-120 object-cover object-top rounded-[40px]"
-      :alt="`${movieDetails.title} poster`"
+      :alt="`${movieDetails.title} banner`"
+      placeholderClass="h-120 rounded-[40px]"
     />
 
     <div

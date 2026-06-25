@@ -15,7 +15,9 @@ const headerRoutes = computed(() => {
 })
 </script>
 <template>
-  <header class="flex items-center justify-between p-4">
+  <header
+    class="flex items-center justify-between p-4 sticky top-0 z-100 bg-black/10 backdrop-blur-md shadow-2xl"
+  >
     <LogoNav />
     <ul class="gap-4 hidden md:flex">
       <li

@@ -3,5 +3,5 @@ defineProps(['skeletonStyles'])
 </script>
 
 <template>
-  <div class="skeleton" :class="skeletonStyles"></div>
+  <div class="skeleton bg-slate-700" :class="skeletonStyles"></div>
 </template>

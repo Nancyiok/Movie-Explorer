@@ -14,7 +14,6 @@ interface Props {
 const { cardInfo } = defineProps<Props>()
 const router = useRouter()
 
-const moviePoster = computed(() => getImageUrl(cardInfo.poster_path))
 const posterAltText = computed(() => {
   return cardInfo.value?.title ? `"${cardInfo.value.title}" movie image` : 'Movie image'
 })
@@ -38,9 +37,10 @@ const navigateToMovieDetail = () => {
     />
     <div class="overflow-hidden bg-cover bg-no-repeat rounded-[8px]">
       <LazyImage
-        :src="moviePoster"
+        :src="getImageUrl(cardInfo.poster_path)"
         :alt="posterAltText"
         imageClass="w-full h-full object-cover transition duration-300 ease-in-out hover:scale-105"
+        placeholderClass="min-h-[400px]"
       />
     </div>
     <p class="text-white p-2">{{ cardInfo.title }}</p>

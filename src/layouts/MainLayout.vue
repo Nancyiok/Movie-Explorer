@@ -3,7 +3,7 @@ import HeaderNav from '@/components/UI/HeaderNav/HeaderNav.vue'
 </script>
 
 <template>
-  <div>
+  <div class="relative">
     <HeaderNav />
     <div class="lg:px-30 px-4">
       <slot />
