@@ -18,6 +18,7 @@ defineProps<{
       :src="getImageUrl(profilePath, 'h632')"
       imageClass="w-full object-cover object-top rounded-[20px]"
       :alt="`${name} photo`"
+      placeholderClass="min-h-[600px] w-full rounded-[20px]"
     />
 
     <div class="space-y-3 text-gray-300 w-full mt-4">

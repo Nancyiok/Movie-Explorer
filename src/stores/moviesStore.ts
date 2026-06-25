@@ -3,6 +3,7 @@ import { defineStore } from 'pinia'
 import { getPopularMovies, searchMovies } from '@/services/moviesService.js'
 import { withMinDelay } from '@/composables/withMinDelay.ts'
 import type { Movie } from '@/types/movies.ts'
+import { HttpStatusCode } from 'axios'
 
 export const useMovieStore = defineStore('movies', () => {
   const allMovies = ref<Movie[]>([])
@@ -11,6 +12,9 @@ export const useMovieStore = defineStore('movies', () => {
   const searchQuery = ref('')
   const totalPages = ref(1)
   const totalResults = ref(0)
+  const error = ref()
+  const hasError = ref(false)
+  const notFound = ref(false)
 
   const fetchMoviesData = async (targetPage: number = 1, query: string = '') => {
     isLoading.value = true
@@ -26,9 +30,16 @@ export const useMovieStore = defineStore('movies', () => {
 
       allMovies.value = data.results
       totalPages.value = data.total_pages
-      totalResults.value = data.total_results
-    } catch (error) {
-      console.error(error)
+      totalResults.value = 500
+    } catch (e) {
+      const status = (e as { response?: { status?: number } })?.response?.status
+      error.value = e instanceof Error ? e : new Error('Loading error')
+      allMovies.value = []
+      if (status === HttpStatusCode.NotFound) {
+        notFound.value = true
+      } else {
+        hasError.value = true
+      }
     } finally {
       isLoading.value = false
     }
@@ -50,6 +61,7 @@ export const useMovieStore = defineStore('movies', () => {
     searchQuery,
     totalPages,
     totalResults,
+    notFound,
     fetchMoviesData,
     searchWithDebounce,
   }

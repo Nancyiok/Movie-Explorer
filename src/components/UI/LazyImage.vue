@@ -5,6 +5,7 @@ interface Props {
   src: string
   alt: string
   imageClass: string
+  placeholderClass: string
 }
 
 defineProps<Props>()
@@ -21,5 +22,7 @@ const isImgLoaded = ref(false)
     :alt="alt"
     @load="isImgLoaded = true"
   />
-  <slot v-else/>
+  <div v-else :class="['bg-slate-700', placeholderClass]">
+
+  </div>
 </template>

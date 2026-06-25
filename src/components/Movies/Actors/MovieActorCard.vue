@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { computed } from 'vue'
 import { getImageUrl } from '@/utils/getImageUrl.ts'
 import LazyImage from '@/components/UI/LazyImage.vue'
 import { ROUTES } from '@/constants/navigationPath.ts'
@@ -18,8 +17,6 @@ const props = defineProps<{
   actor: Actor
 }>()
 
-const imagePath = computed(() => getImageUrl(props.actor.profile_path, 'w185'))
-
 const navigateToDetail = () => {
   router.push({
     path: `${ROUTES.ACTOR}/${props.actor.id}`,
@@ -29,11 +26,19 @@ const navigateToDetail = () => {
 </script>
 
 <template>
-  <div class="flex-shrink-0 w-32 text-center snap-start group cursor-pointer" @click="navigateToDetail">
+  <div
+    class="flex-shrink-0 w-32 text-center snap-start group cursor-pointer"
+    @click="navigateToDetail"
+  >
     <div
       class="w-28 h-28 mx-auto rounded-full overflow-hidden border border-white/10 bg-slate-800 shadow-lg mb-3 transition-transform duration-300 group-hover:scale-105 group-hover:border-violet-500/50"
     >
-      <LazyImage :src="imagePath" :alt="actor.name" imageClass="w-full h-full object-cover" />
+      <LazyImage
+        :src="getImageUrl(props.actor.profile_path, 'w185')"
+        :alt="actor.name"
+        imageClass="w-full h-full object-cover"
+        placeholderClass="w-28 h-28"
+      />
     </div>
 
     <p

@@ -22,6 +22,7 @@ const posterUrl = computed(() => getImageUrl(movieDetails.poster_path))
         :src="posterUrl"
         imageClass="w-full h-full object-cover transition duration-300 ease-in-out hover:scale-105"
         :alt="`${movieDetails.title} movie poster`"
+        placeholderClass="min-h-[600px] min-w-[500px]"
       />
     </div>
   </div>

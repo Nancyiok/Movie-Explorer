@@ -2,6 +2,8 @@ import { ROUTES } from '../constants/navigationPath.ts'
 import PopularMoviesView from '@/views/PopularMoviesView.vue'
 import MovieDetailsView from '@/views/MovieDetailsView.vue'
 import ActorDetailsView from '@/views/ActorDetailsView.vue'
+import LoginView from '@/views/LoginView.vue'
+import NotFoundView from '@/views/NotFoundView.vue'
 
 export const publicRoutes = [
   {
@@ -25,7 +27,7 @@ export const publicRoutes = [
   {
     path: ROUTES.LOGIN,
     name: 'login',
-    component: 'LoginPage',
+    component: LoginView,
     meta: { title: 'Login' },
   },
   {
@@ -70,3 +72,9 @@ export const authRoutes = protectedRoutes.map((route) => ({
     requiresAuth: true,
   },
 }))
+
+export const routes = [
+  ...publicRoutes,
+  ...authRoutes,
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView },
+]

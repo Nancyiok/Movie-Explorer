@@ -20,14 +20,21 @@ const first = computed(() => (currentPage.value - 1) * elementsPerPage.value)
 
 watch(
   [currentPage, currentSearch],
-  ([page, search], [, oldSearch]) => {
-    if (search !== oldSearch) {
+  ([page, search], [oldPage, oldSearch]) => {
+    if (oldPage && oldSearch && movieStore.movies?.length > 0) {
+      return
+    }
+
+    if (search !== oldSearch && oldSearch) {
       setQuery('page', 1)
       movieStore.searchWithDebounce(search)
       return
     }
-    movieStore.fetchMoviesData(page, search)
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+
+    if (page !== oldPage) {
+      movieStore.fetchMoviesData(page, search)
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
   },
   { immediate: true },
 )
@@ -45,7 +52,7 @@ const moviesListContainer = 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-
 </script>
 
 <template>
-  <div class="container mx-auto p-4 flex flex-col min-h-screen justify-between">
+  <div class="flex flex-col min-h-screen">
     <div class="mb-6 max-w-md">
       <InputBase
         :modelValue="currentSearch"
@@ -56,21 +63,30 @@ const moviesListContainer = 'grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-
       />
     </div>
 
-    <div>
-      <div v-if="movieStore.isLoading" :class="moviesListContainer">
+    <div class="flex-1 flex flex-col justify-center">
+      <div v-if="movieStore.isLoading" :class="[moviesListContainer, 'mb-auto']">
         <MovieCardSkeleton v-for="i in elementsPerPage" :key="i" />
       </div>
 
-      <div v-else-if="movieStore.allMovies.length > 0" :class="moviesListContainer">
+      <div v-else-if="movieStore.allMovies.length > 0" :class="[moviesListContainer, 'mb-auto']">
         <MovieCard v-for="movie in movieStore.allMovies" :key="movie.id" :cardInfo="movie" />
       </div>
 
-      <div v-else class="text-center text-gray-500 my-12">
-        Nothing found by search "{{ currentSearch }}"
+      <div v-else-if="movieStore.allMovies.length === 0" class="grid place-items-center my-auto">
+        <p class="text-xl text-center text-gray-500">
+          Oops! Something went wrong please try again!!!
+        </p>
       </div>
+
+      <div v-else class="grid place-items-center my-auto">
+        <p class="text-xl text-center text-gray-500">
+          Oops! We couldn't find any results for: "{{ currentSearch }}"
+        </p>
+      </div>
+
     </div>
 
-    <div class="mt-12 flex justify-center">
+    <div class="mt-12 py-4 flex justify-center" v-if="movieStore.allMovies.length > 0">
       <Paginator
         :first="first"
         :rows="elementsPerPage"
